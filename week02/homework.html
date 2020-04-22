@@ -1,0 +1,54 @@
+<script>
+    // 课堂随笔
+    // for (let i = 0; i < 128; i++) {
+    //     document.write('<span style=''>' + String.fromCharCode(i) +'</span >')
+    // }
+    // var a = 0.1;
+    // var b = 0.2;
+
+    // var memory = new Uint8Array(8);
+    // const memory2 = new Float64Array(memory.buffer)
+    // memory[0]
+
+
+    // for (let i = 0; i < 8; i++) {
+    //     const s = memory2[i].toString(2);
+    //     console.log()
+    // }
+    // console.log(memory2)
+
+    // 作业
+    // 1.整数和小数和科学计数法
+    const e = /^[+-]?[\d]+([\.][\d]+)?([Ee][+-]?[\d]+)?$/
+    function chk(value) {
+        var patrn = /^\d+(\.\d+)?$/;
+        var result = true;
+        console.log(e.test(value))
+
+        return result;
+    }
+    chk(1) // true
+    chk(1.1111111111111112e+98) // true
+    chk(1.2) // true
+    chk('1.a')// false
+    // 2.UTF-8 Encoding 的函数   --- 百度的不知道到底是什么。。
+    function encodeUtf8(text) {
+        const code = encodeURIComponent(text);
+        const bytes = [];
+        for (var i = 0; i < code.length; i++) {
+            const c = code.charAt(i);
+            if (c === '%') {
+                const hex = code.charAt(i + 1) + code.charAt(i + 2);
+                const hexVal = parseInt(hex, 16);
+                bytes.push(hexVal);
+                i += 2;
+            } else bytes.push(c.charCodeAt(0));
+        }
+        console.log(bytes)
+        return bytes;
+    }
+    encodeUtf8('a')
+    // 3.正则表达式，匹配所有的字符串直接量，单引号和双引号
+    // 单双引号
+    const reg = /(?:[^"\\]|\\.)*/;
+</script>
