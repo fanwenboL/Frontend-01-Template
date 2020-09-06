@@ -1,0 +1,114 @@
+<style>
+    .board {
+        width: 320px;
+    }
+
+    .cell {
+        width: 100px;
+        height: 100px;
+        border: solid 1px white;
+        display: inline-block;
+        background-color: green;
+        vertical-align: middle;
+        line-height: 100px;
+        text-align: center;
+        font-size: 50px;
+    }
+</style>
+<div id="board"></div>
+<script>
+    let pat = [
+        [2, 0, 0],
+        [0, 1, 0],
+        [0, 0, 0]
+    ]
+    let color = 2;
+    function show() {
+        let board = document.getElementById('board');
+        board.innerHTML = "";
+        for (let i = 0; i < 3; i++) {
+            for (let j = 0; j < 3; j++) {
+                let cell = document.createElement("div");
+                cell.innerHTML = pat[i][j] == 2 ? "❌" : pat[i][j] == 1 ? '⭕️' : '';
+                board.classList.add('board')
+                cell.classList.add('cell')
+                cell.addEventListener('click', () => move(j, i))
+                board.appendChild(cell)
+            }
+        }
+    }
+    function move(x, y) {
+        if (pat[y][x] !== 0) {
+            return
+        }
+        pat[y][x] = color;
+        if (check(pat, color)) {
+            alert(color === 1 ? "❌" : '⭕️')
+        }
+        color = 3 - color;
+        show()
+    }
+    function check(pat, color) {
+        for (let i = 0; i < 3; i++) {
+            let win = true;
+            for (let j = 0; j < 3; j++) {
+                if (pat[i][j] !== color) {
+                    win = false;
+                }
+                if (win)
+                    return true;
+            }
+        }
+        for (let i = 0; i < 3; i++) {
+            let win = true;
+            for (let j = 0; j < 3; j++) {
+                if (pat[j][i] !== color) {
+                    win = false;
+                }
+                if (win)
+                    return true;
+            }
+        }
+        {
+            let win = true;
+            for (let j = 0; j < 3; j++) {
+                if (pat[j][j] !== color) {
+                    win = false;
+                }
+                if (win)
+                    return true;
+            }
+        }
+        {
+            let win = true;
+            for (let j = 0; j < 3; j++) {
+                if (pat[j][2 - j] !== color) {
+                    win = false;
+                    break;
+                }
+                if (win)
+                    return true;
+            }
+        }
+        return false;
+
+    }
+    function clone(pat) {
+        return JSON.parse(JSON.stringify(pat))
+    }
+    function willwin(pat, color) {
+        for (let i = 0; i < 3; i++) {
+            for (let j = 0; j < 3; j++) {
+                if(pat[i][j] !== 0)
+                continue;
+                let tmp = clone(pat);
+                tmp[i][j] = color;
+                if(check*tmp,color) {
+                    return true;
+                }
+            }
+        }
+    }
+    show()
+    console.log(pat)
+</script>
